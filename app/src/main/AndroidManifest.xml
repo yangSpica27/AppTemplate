@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.spica.app">
+
+    <application
+        android:theme="@style/Theme.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:name=".App"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true">
+
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--用于初始化-->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="com.spica.app.initializer.CoilInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="com.spica.app.initializer.TimberInitializer"
+                android:value="androidx.startup" />
+            <!--            <meta-data-->
+            <!--                android:name="com.spica.spicaschool.initializer.RxHttpInitializer"-->
+            <!--                android:value="androidx.startup" />-->
+        </provider>
+        <!--结束-->
+
+        <!--访问画廊必须-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+        <!-- 结束-->
+
+    </application>
+
+</manifest>
