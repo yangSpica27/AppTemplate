@@ -94,8 +94,8 @@ dependencies {
   // Lottie 动画库
   implementation 'com.airbnb.android:lottie:4.1.0'
 
-  // Preference DataStore
-  implementation 'androidx.datastore:datastore-preferences:1.0.0'
+  // Preference MMKV
+  implementation 'com.tencent:mmkv-static:1.2.10'
 
   // App startup
   implementation "androidx.startup:startup-runtime:1.1.0"

@@ -22,13 +22,4 @@ object AdaptScreenUtils {
     }
   }
 
-  @JvmStatic
-  fun pt2Px(resource: Resources, ptValue: Float): Int {
-    return (ptValue * resource.displayMetrics.xdpi / 72f + 0.5).toInt()
-  }
-
-  @JvmStatic
-  fun px2Pt(resource: Resources, pxValue: Float): Int {
-    return (pxValue * 72 / resource.displayMetrics.xdpi + 0.5).toInt()
-  }
 }

@@ -34,9 +34,9 @@
             <meta-data
                 android:name="com.spica.app.initializer.TimberInitializer"
                 android:value="androidx.startup" />
-            <!--            <meta-data-->
-            <!--                android:name="com.spica.spicaschool.initializer.RxHttpInitializer"-->
-            <!--                android:value="androidx.startup" />-->
+            <meta-data
+                android:name="com.spica.spicaschool.initializer.MMKVInitializer "
+                android:value="androidx.startup" />
         </provider>
         <!--结束-->
 

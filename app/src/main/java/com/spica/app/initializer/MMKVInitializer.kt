@@ -2,14 +2,14 @@ package com.spica.app.initializer
 
 import android.content.Context
 import androidx.startup.Initializer
+import com.tencent.mmkv.MMKV
 
 
 @Suppress("unused")
-class RxHttpInitializer : Initializer<Unit> {
+class MMKVInitializer : Initializer<Unit> {
 
   override fun create(context: Context) {
-
-
+    MMKV.initialize(context)
   }
 
 
