@@ -1,13 +1,14 @@
 package com.spica.app.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.spica.app.R
+import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
+    setContentView(MainPage(this))
   }
 }

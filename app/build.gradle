@@ -21,9 +21,10 @@ android {
     renderscriptTargetApi 21
     renderscriptSupportModeEnabled true
 
+
     javaCompileOptions {
       annotationProcessorOptions {
-        arguments += ["rxhttp_rxjava": "rxjava3"]
+        arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
       }
     }
 
@@ -48,8 +49,13 @@ android {
     viewBinding true
   }
 
+  tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions.freeCompilerArgs += ["-Xopt-in=kotlin.time.ExperimentalTime"]
+    kotlinOptions.freeCompilerArgs += ["-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
+  }
+
   //去除冲突注解
-  configurations { implementation.exclude group: 'org.jetbrains', module: 'annotations' }
+//  configurations { implementation.exclude group: 'org.jetbrains', module: 'annotations' }
 }
 
 dependencies {
@@ -72,7 +78,7 @@ dependencies {
 
   // 协程支持
   implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1-native-mt'
-  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1-native-mt'
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
   implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.1-native-mt'
 
   // 生命周期+协程
@@ -95,19 +101,25 @@ dependencies {
   implementation "androidx.startup:startup-runtime:1.1.0"
 
   // Hilt 依赖注入
-  implementation 'com.google.dagger:hilt-android:2.38.1'
-  kapt 'com.google.dagger:hilt-compiler:2.38.1'
+  implementation "com.google.dagger:hilt-android:$hilt_core_version"
+  kapt "com.google.dagger:hilt-compiler:$hilt_core_version"
+  kapt 'androidx.hilt:hilt-compiler:1.0.0'
 
   // Timber 日志
   implementation 'com.jakewharton.timber:timber:5.0.1'
 
   //network 网络请求相关
-  implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.2')
-  implementation "om.squareup.retrofit2:retrofit:2.9.0"
+  implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
+  implementation "com.squareup.retrofit2:retrofit:2.9.0"
+  implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+
+  //Json解析
+  implementation 'com.squareup.moshi:moshi-kotlin:1.12.0'
+  kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.12.0'
 
   //日期格式化
-  implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
-  
+  implementation 'org.ocpsoft.prettytime:prettytime:5.0.1.Final'
+
 
   // 单元测试框架
   testImplementation 'junit:junit:4.+'
@@ -117,4 +129,8 @@ dependencies {
 
 kapt {
   correctErrorTypes true
+  javacOptions {
+    option("-Adagger.fastInit=ENABLED")
+    option("-Adagger.hilt.android.internal.disableAndroidSuperclassValidation=true")
+  }
 }
