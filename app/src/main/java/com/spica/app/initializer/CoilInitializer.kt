@@ -12,6 +12,7 @@ import coil.request.CachePolicy
  * 初始化图片加载
  */
 class CoilInitializer : Initializer<Unit> {
+
   override fun create(context: Context) {
     val imageLoader = ImageLoader.Builder(context)
       .crossfade(true)
