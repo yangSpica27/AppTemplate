@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/drawable/bg_round_top.xml" value="0.28425925925925927" />
+        <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/drawable/spacer_medium.xml" value="0.28425925925925927" />
+        <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/xml/provider_paths.xml" value="0.20462962962962963" />
       </map>
     </option>

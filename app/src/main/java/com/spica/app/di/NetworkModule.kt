@@ -1,6 +1,9 @@
 package com.spica.app.di
 
+import com.skydoves.sandwich.coroutines.CoroutinesResponseCallAdapterFactory
 import com.spica.app.network.HttpLoggingInterceptor
+import com.spica.app.network.WanAndroidClient
+import com.spica.app.network.service.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +16,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule {
+object NetworkModule {
 
 
   @Provides
@@ -29,9 +32,22 @@ class NetworkModule {
   fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
     return Retrofit.Builder()
       .client(okHttpClient)
-      .baseUrl("https://pokeapi.co/api/v2/")
+      .baseUrl("https://www.wanandroid.com/")
       .addConverterFactory(MoshiConverterFactory.create())
+      .addCallAdapterFactory(CoroutinesResponseCallAdapterFactory.create())
       .build()
+  }
+
+  @Provides
+  @Singleton
+  fun provideApiService(retrofit: Retrofit): ApiService {
+    return retrofit.create(ApiService::class.java)
+  }
+
+  @Provides
+  @Singleton
+  fun provideApiClient(apiService: ApiService): WanAndroidClient {
+    return WanAndroidClient(apiService)
   }
 
 
