@@ -38,17 +38,29 @@ class LoginRepository @Inject constructor(
     password: String,
     onStart: () -> Unit,
     onComplete: () -> Unit,
-    onError: (String?) -> Unit
+    onError: (String?) -> Unit,
+    onSuccess: () -> Unit
   ) = flow {
     var userData: UserData
+
     val response = wanAndroidClient.login(userName, password)
+
     response.suspendOnSuccess {
-      userData = data.userData
-      userDao.deleteUser()
-      userDao.insert(userData)
-      emit(userData)
+      if (this.data.errorCode != 0) {
+        onError(data.errorMsg)
+      } else {
+        this.data.userData?.let {
+          userData = it
+          userDao.deleteUser()
+          userDao.insert(userData)
+          emit(userData)
+          isLogin = true
+          onSuccess()
+        }
+      }
+
     }.onError {
-      onError("${message()}")
+      onError(message())
     }
       .onException {
         onError(message)
@@ -70,21 +82,28 @@ class LoginRepository @Inject constructor(
     password: String,
     onStart: () -> Unit,
     onComplete: () -> Unit,
-    onError: (String?) -> Unit
+    onError: (String?) -> Unit,
+    onSuccess: () -> Unit
   ) = flow {
     var userData: UserData
     val response = wanAndroidClient.register(userName, password)
     response.suspendOnSuccess {
-      userData = data.userData
-      userDao.deleteUser()
-      userDao.insert(userData)
-      emit(userData)
-    }.onError {
-      onError("${message()}")
-    }
-      .onException {
-        onError(message)
+      if (data.errorCode != 0) {
+        onError(data.errorMsg)
+      } else {
+        this.data.userData?.let {
+          userData = it
+          userDao.deleteUser()
+          userDao.insert(userData)
+          emit(userData)
+          onSuccess()
+        }
       }
+    }.onError {
+      onError(message())
+    }.onException {
+      onError(message)
+    }
   }.onStart {
     onStart()
   }.onCompletion {

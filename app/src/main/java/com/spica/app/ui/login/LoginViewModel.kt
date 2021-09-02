@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.spica.app.repository.LoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,10 +23,18 @@ class LoginViewModel
     password: String,
     onStart: () -> Unit,
     onComplete: () -> Unit,
-    onError: (String?) -> Unit
+    onError: (String?) -> Unit,
+    onSuccess: () -> Unit
   ) {
     viewModelScope.launch {
-      loginRepository.login(userName, password, onStart, onComplete, onError)
+      loginRepository.login(
+        userName,
+        password,
+        onStart,
+        onComplete,
+        onError,
+        onSuccess
+      ).collect()
     }
   }
 
@@ -38,16 +47,24 @@ class LoginViewModel
     password: String,
     onStart: () -> Unit,
     onComplete: () -> Unit,
-    onError: (String?) -> Unit
+    onError: (String?) -> Unit,
+    onSuccess: () -> Unit
   ) {
     viewModelScope.launch {
-      loginRepository.register(userName, password, onStart, onComplete, onError)
+      loginRepository.register(
+        userName,
+        password,
+        onStart,
+        onComplete,
+        onError,
+        onSuccess
+      ).collect()
     }
   }
 
 
   //验证密码
-  fun verifyPassword(password: String, rePassword: String) = password == password
+  fun verifyPassword(password: String, rePassword: String) = password == rePassword
 
 
 }

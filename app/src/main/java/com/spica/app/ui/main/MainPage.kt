@@ -20,6 +20,7 @@ class MainPage(context: Context) : CustomLayout(context) {
       ellipsize = TextUtils.TruncateAt.END
     }
 
+
   private val centerText2 = AppCompatTextView(context)
     .apply {
       setTextColor(Color.BLACK)
