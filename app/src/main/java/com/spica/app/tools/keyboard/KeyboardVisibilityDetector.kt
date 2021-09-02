@@ -21,9 +21,6 @@ object KeyboardVisibilityDetector {
 
     override fun onPreDraw(): Boolean {
       val detected = detect()
-
-      // The layout flickers for a moment, usually on the first
-      // animation. Intercepting this pre-draw seems to solve the problem.
       return detected.not()
     }
 
