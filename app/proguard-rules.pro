@@ -84,3 +84,8 @@
 # kept. Suspend functions are wrapped in continuations where the type argument
 # is used.
 -keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+
+#-dontwarn android.support.v8.renderscript.**
+#-keep public class android.support.v8.renderscript.** { *; }
+-dontwarn androidx.renderscript.**
+-keep public class androidx.renderscript.** { *; }
