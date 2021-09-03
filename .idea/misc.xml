@@ -4,11 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/drawable/bg_round_top.xml" value="0.28425925925925927" />
+        <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/drawable/ic_default_avatar.xml" value="0.24259259259259258" />
+        <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/drawable/ic_right.xml" value="0.24259259259259258" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/drawable/ic_write.xml" value="0.2361111111111111" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/drawable/spacer_medium.xml" value="0.28425925925925927" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/activity_main.xml" value="0.21296296296296297" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/fragment_home.xml" value="0.21296296296296297" />
+        <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/fragment_home_container.xml" value="0.17407407407407408" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/fragment_mine.xml" value="0.21296296296296297" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/view_setting_item.xml" value="0.21296296296296297" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/menu/bottom_nav_menu.xml" value="0.19907407407407407" />

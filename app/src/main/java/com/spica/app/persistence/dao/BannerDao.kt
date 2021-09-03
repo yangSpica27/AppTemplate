@@ -15,7 +15,7 @@ interface BannerDao {
 
 
   @Query("SELECT * FROM bannerdata")
-  suspend fun getBanners(): List<BannerData?>?
+  suspend fun getBanners(): List<BannerData?>
 
 
   @Query("DELETE FROM bannerdata")

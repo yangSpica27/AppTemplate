@@ -15,6 +15,8 @@ import androidx.viewbinding.ViewBinding
 
 abstract class BindingFragment<ViewBindingType : ViewBinding> : Fragment(), LifecycleObserver {
 
+  private var isFirstLoad = true
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     allowEnterTransitionOverlap = true
@@ -57,7 +59,14 @@ abstract class BindingFragment<ViewBindingType : ViewBinding> : Fragment(), Life
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     viewLifecycleOwner.lifecycle.addObserver(this)
-    init()
+  }
+
+  override fun onResume() {
+    super.onResume()
+    if (isFirstLoad) {
+      isFirstLoad = false
+      init()
+    }
   }
 
   override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {

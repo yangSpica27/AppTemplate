@@ -3,7 +3,7 @@ package com.spica.app.ui.main
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.spica.app.ui.home.HomeFragment
+import com.spica.app.ui.homecontainer.HomeContainerFragment
 import com.spica.app.ui.mine.MineFragment
 
 /**
@@ -11,11 +11,12 @@ import com.spica.app.ui.mine.MineFragment
  */
 class MainPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
 
+
   private val fragmentsCreators: Map<Int, () -> Fragment> = mapOf(
-    HOME to { HomeFragment() },
-    BLOG to { HomeFragment() },
-    SEARCH to { HomeFragment() },
-    PROJECT to { HomeFragment() },
+    HOME to { HomeContainerFragment() },
+    BLOG to { HomeContainerFragment() },
+    SEARCH to { HomeContainerFragment() },
+    PROJECT to { HomeContainerFragment() },
     ME to { MineFragment() }
   )
 
@@ -23,7 +24,7 @@ class MainPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
 
 
   override fun createFragment(position: Int): Fragment {
-    return fragmentsCreators[position]?.invoke() ?: HomeFragment()
+    return fragmentsCreators[position]?.invoke() ?: HomeContainerFragment()
   }
 
 

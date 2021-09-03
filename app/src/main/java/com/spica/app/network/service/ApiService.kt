@@ -1,12 +1,10 @@
 package com.spica.app.network.service
 
 import com.skydoves.sandwich.ApiResponse
+import com.spica.app.model.article.Article
 import com.spica.app.model.banner.Banner
 import com.spica.app.model.user.User
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 @Suppress("unused")
 interface ApiService {
@@ -50,5 +48,13 @@ interface ApiService {
    */
   @GET("/user/logout/json")
   suspend fun logOut(): ApiResponse<Any>
+
+
+  /**
+   * 获取首页文章列表
+   */
+  @GET("/article/list/{page}/json")
+  suspend fun getHomeArticles(@Path("page") page: Int): ApiResponse<Article>
+
 
 }

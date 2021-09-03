@@ -14,7 +14,47 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:padding="24dp"
         android:background="@color/white">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/avatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_default_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="未登录"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            app:layout_constraintEnd_toStartOf="@id/iv_more"
+            app:layout_constraintTop_toTopOf="@id/avatar"
+            android:layout_marginStart="24dp"
+            app:layout_constraintStart_toEndOf="@id/avatar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="邮箱"
+            app:layout_constraintEnd_toStartOf="@id/iv_more"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="@id/avatar"
+            app:layout_constraintStart_toEndOf="@id/avatar" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_more"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_right"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -33,6 +73,7 @@
         android:orientation="vertical">
 
         <com.spica.app.ui.mine.SettingItem
+            android:id="@+id/item_friend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:name="朋友"
@@ -45,6 +86,7 @@
             android:background="#418F8F8F" />
 
         <com.spica.app.ui.mine.SettingItem
+            android:id="@+id/item_collect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:name="收藏"
@@ -53,6 +95,7 @@
     </LinearLayout>
 
     <com.spica.app.ui.mine.SettingItem
+        android:id="@+id/item_exit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:name="退出"

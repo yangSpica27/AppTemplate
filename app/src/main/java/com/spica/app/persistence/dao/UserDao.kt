@@ -1,5 +1,6 @@
 package com.spica.app.persistence.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -21,5 +22,8 @@ interface UserDao {
   @Query("SELECT * FROM userdata WHERE did  = 1")
   suspend fun queryUser(): UserData?
 
+
+  @Query("SELECT * FROM userdata WHERE did  = 1")
+   fun queryUserLiveDate(): LiveData<UserData?>
 
 }
