@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class DataX(
+data class ArticleItem(
     @Json(name = "apkLink")
     val apkLink: String,
     @Json(name = "audit")

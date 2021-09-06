@@ -46,7 +46,9 @@ class HomeRepository @Inject constructor(
         //发生错误触发错误回调
         onError("${message()}")
       }.onException { //服务端异常触发错误回调
-        onError(message) } }
+        onError(message)
+      }
+    }
   }.onStart {
     //请求开始
     onStart()
@@ -55,5 +57,17 @@ class HomeRepository @Inject constructor(
     onComplete()
     //指定线程环境为IO线程
   }.flowOn(Dispatchers.IO)
+
+
+  /**
+   *  获取首页文章
+   */
+  @WorkerThread
+  fun fetchHomeArcicle(
+    onComplete: () -> Unit,
+    onError: (String?) -> Unit) {
+
+  }
+
 
 }

@@ -9,7 +9,7 @@ data class ArticleData(
     @Json(name = "curPage")
     val curPage: Int,
     @Json(name = "datas")
-    val datas: List<DataX>,
+    val datas: List<ArticleItem>,
     @Json(name = "offset")
     val offset: Int,
     @Json(name = "over")

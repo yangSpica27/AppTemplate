@@ -31,6 +31,11 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>() {
 
   private val banners = mutableListOf<BannerData?>()
 
+
+  private val adpter by lazy {
+    ArticleAdapter(false)
+  }
+
   private val bannerAdapter = object : BannerImageAdapter<BannerData>(banners) {
 
 
@@ -46,7 +51,10 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>() {
 
   @SuppressLint("NotifyDataSetChanged")
   override fun init() {
+    adpter.loadMoreModule.setOnLoadMoreListener {
 
+    }
+    viewBinding.recyclerView.adapter = adpter
     viewBinding.banner
       .addBannerLifecycleObserver(viewLifecycleOwner)
       .indicator = CircleIndicator(requireContext())
@@ -81,6 +89,10 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>() {
     lifecycleScope.launch(Dispatchers.Main){
       Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
+  }
+
+  private fun loadData(isUpdate: Boolean){
+
   }
 
 
