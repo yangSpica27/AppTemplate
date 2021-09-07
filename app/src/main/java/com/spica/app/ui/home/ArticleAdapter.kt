@@ -4,12 +4,15 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.text.Html
 import android.text.Html.fromHtml
+import android.text.TextUtils
 import coil.load
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.spica.app.R
 import com.spica.app.databinding.ItemArticleBinding
+import com.spica.app.databinding.ItemArticleImgBinding
+import com.spica.app.extensions.hide
 import com.spica.app.model.article.ArticleItem
 
 
@@ -20,7 +23,7 @@ class ArticleAdapter constructor(private val showStar: Boolean) : LoadMoreModule
   init {
     // 绑定 layout 对应的 type
     addItemType(ITEM_TEXT, R.layout.item_article)
-    addItemType(ITEM_IMG, R.layout.item_article)
+    addItemType(ITEM_IMG, R.layout.item_article_img)
   }
 
   companion object {
@@ -39,8 +42,14 @@ class ArticleAdapter constructor(private val showStar: Boolean) : LoadMoreModule
       } else {
         binding.articleTitle.text = fromHtml(item.title)
       }
+      if (TextUtils.isEmpty(item.desc)){
+        binding.tvDesc.hide()
+      }else{
+        binding.tvDesc.text = item.desc
+      }
+
       binding.articleAuthorImg.load(R.drawable.ic_time)
-      binding.articleTag.text = item.chapterName + "/" + item.superChapterName
+      binding.articleTag.text = item.chapterName + "·" + item.superChapterName
       if (item.author.isBlank()) {
         binding.articleAuthor.text = item.shareUser
       } else {
@@ -49,21 +58,21 @@ class ArticleAdapter constructor(private val showStar: Boolean) : LoadMoreModule
     }
 
     if (holder.itemViewType == ITEM_IMG) {
-      val binding = ItemArticleBinding.bind(holder.itemView)
-      binding.root.setBackgroundColor(binding.root.context.getColor(R.color.black))
-      binding.articleTime.text = item.niceShareDate
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        binding.articleTitle.text = fromHtml(item.title, Html.FROM_HTML_MODE_LEGACY)
-      } else {
-        binding.articleTitle.text = fromHtml(item.title)
-      }
-      binding.articleAuthorImg.load(R.drawable.ic_time)
-      binding.articleTag.text = item.chapterName + "/" + item.superChapterName
+      val binding = ItemArticleImgBinding.bind(holder.itemView)
       if (item.author.isBlank()) {
-        binding.articleAuthor.text = item.shareUser
+        binding.tvAuthor.text = item.shareUser
       } else {
-        binding.articleAuthor.text = item.author
+        binding.tvAuthor.text = item.author
       }
+      binding.tvDesc.text = item.desc
+      binding.tvTime.text = item.niceShareDate
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        binding.tvTitle.text = fromHtml(item.title, Html.FROM_HTML_MODE_LEGACY)
+      } else {
+        binding.tvTitle.text = fromHtml(item.title)
+      }
+      binding.ivPic.load(item.envelopePic)
+
     }
 
   }
