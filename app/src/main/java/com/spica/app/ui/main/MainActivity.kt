@@ -52,6 +52,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 
   private fun initView() {
     viewBinding.mainViewPager.isUserInputEnabled = false
+    viewBinding.mainViewPager.offscreenPageLimit = 5
     viewBinding.mainViewPager.adapter = MainPagerAdapter(this)
     viewBinding.bottomNavigationBar.setOnItemSelectedListener(onItemSelectedListener)
   }

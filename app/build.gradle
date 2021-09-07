@@ -124,6 +124,7 @@ dependencies {
 
   //RecycleView
   implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+  implementation "com.github.fondesa:recycler-view-divider:3.5.0"
 
   // 单元测试框架
   testImplementation 'junit:junit:4.+'
@@ -140,6 +141,9 @@ dependencies {
 
   //cookieJar
   implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+
+  //Webview
+  implementation 'com.github.Justson.AgentWeb:agentweb-core:v4.1.9-androidx'
 
 }
 

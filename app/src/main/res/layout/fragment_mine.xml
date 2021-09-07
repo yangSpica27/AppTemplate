@@ -29,8 +29,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_username"
             android:layout_width="0dp"
+            tools:text="Janes"
             android:layout_height="wrap_content"
-            android:text="未登录"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
             app:layout_constraintEnd_toStartOf="@id/iv_more"
             app:layout_constraintTop_toTopOf="@id/avatar"
@@ -41,7 +41,7 @@
             android:id="@+id/tv_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="邮箱"
+            tools:text="spica27@qq.com"
             app:layout_constraintEnd_toStartOf="@id/iv_more"
             android:layout_marginStart="24dp"
             app:layout_constraintBottom_toBottomOf="@id/avatar"

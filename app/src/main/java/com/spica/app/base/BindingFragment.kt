@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 abstract class BindingFragment<ViewBindingType : ViewBinding> : Fragment(), LifecycleObserver {
@@ -89,6 +93,15 @@ abstract class BindingFragment<ViewBindingType : ViewBinding> : Fragment(), Life
       })
     }
     return animation
+  }
+
+  /**
+   * 弹Toast
+   */
+  protected fun showToast(message: String?) {
+    lifecycleScope.launch(Dispatchers.Main) {
+      Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
   }
 
 }

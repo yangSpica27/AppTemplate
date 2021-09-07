@@ -1,6 +1,9 @@
 package com.spica.app.model.article
 
 
+import android.text.TextUtils
+import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.spica.app.ui.home.ArticleAdapter
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -71,5 +74,10 @@ data class ArticleItem(
     @Json(name = "visible")
     val visible: Int,
     @Json(name = "zan")
-    val zan: Int
-)
+    val zan: Int,
+) : MultiItemEntity {
+    override val itemType: Int
+        get() = if (TextUtils.isEmpty(envelopePic))
+            ArticleAdapter.ITEM_TEXT
+        else ArticleAdapter.ITEM_IMG
+}

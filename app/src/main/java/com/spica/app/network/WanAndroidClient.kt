@@ -1,6 +1,7 @@
 package com.spica.app.network
 
 import com.skydoves.sandwich.ApiResponse
+import com.spica.app.model.article.Article
 import com.spica.app.model.banner.Banner
 import com.spica.app.model.user.User
 import com.spica.app.network.service.ApiService
@@ -20,6 +21,14 @@ class WanAndroidClient
 
   suspend fun register(userName: String, password: String):
       ApiResponse<User> = apiService.register(userName, password, password)
+
+
+  suspend fun fetchHomeArticles(page: Int): ApiResponse<Article> =
+    apiService.getHomeArticles(page)
+
+
+  suspend fun fetchSquareArticles(page: Int): ApiResponse<Article> =
+    apiService.getSquareArticleList(page)
 
 
 }

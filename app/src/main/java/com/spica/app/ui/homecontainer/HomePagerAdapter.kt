@@ -3,6 +3,7 @@ package com.spica.app.ui.homecontainer
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.spica.app.ui.home.HomeFragment
+import com.spica.app.ui.square.SquareFragment
 
 class HomePagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
@@ -16,7 +17,7 @@ class HomePagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
   private val fragmentsCreators: Map<Int, () -> Fragment> = mapOf(
     HOME to { HomeFragment() },
-    SQUARE to { Fragment() },
+    SQUARE to { SquareFragment() },
     UPDATE to { Fragment() },
     SYSTEM to { Fragment() },
     NAVIGATION to { Fragment() }

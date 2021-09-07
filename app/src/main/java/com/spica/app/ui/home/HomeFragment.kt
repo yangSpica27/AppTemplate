@@ -1,15 +1,18 @@
 package com.spica.app.ui.home
 
 import android.annotation.SuppressLint
+import android.text.TextUtils
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.viewModels
+import android.widget.LinearLayout
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import coil.load
-import coil.transform.RoundedCornersTransformation
+import com.fondesa.recyclerviewdivider.dividerBuilder
+import com.spica.app.R
 import com.spica.app.base.BindingFragment
-import com.spica.app.databinding.FragmentHomeBinding
+import com.spica.app.databinding.LayoutListBinding
 import com.spica.app.model.banner.BannerData
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
@@ -23,58 +26,114 @@ import kotlinx.coroutines.launch
  * 主页
  */
 @AndroidEntryPoint
-class HomeFragment : BindingFragment<FragmentHomeBinding>() {
+class HomeFragment : BindingFragment<LayoutListBinding>() {
+  /**
+   * viewModel
+   */
+  private val viewModel: ArticleViewModel by activityViewModels()
 
 
-  private val viewModel: HomeViewModel by viewModels()
-
-
+  /**
+   * banner数据
+   */
   private val banners = mutableListOf<BannerData?>()
 
 
-  private val adpter by lazy {
+  /**
+   * 列表适配器
+   */
+  private val listAdapter by lazy {
     ArticleAdapter(false)
   }
 
+  /**
+   * Banner
+   */
+  private val bannerView by lazy {
+    com.youth.banner.Banner<BannerData, BannerImageAdapter<BannerData>>(requireContext())
+  }
+
+  /**
+   * banner的适配器
+   */
   private val bannerAdapter = object : BannerImageAdapter<BannerData>(banners) {
-
-
     override fun onBindView(holder: BannerImageHolder, data: BannerData, position: Int, size: Int) {
-      holder.imageView.load(data.imagePath) {
-        transformations(RoundedCornersTransformation(8.dp.toFloat()))
-      }
+      holder.imageView.load(data.imagePath)
     }
   }
 
+  /**
+   * 绑定ViewBinding
+   */
   override fun setupViewBinding(inflater: LayoutInflater, container: ViewGroup?):
-      FragmentHomeBinding = FragmentHomeBinding.inflate(inflater)
+      LayoutListBinding = LayoutListBinding.inflate(inflater)
 
   @SuppressLint("NotifyDataSetChanged")
   override fun init() {
-    adpter.loadMoreModule.setOnLoadMoreListener {
 
+    addDivider()
+
+    // 初始化BannerView
+    bannerView.run {
+      layoutParams = LinearLayout.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        168.dp
+      )
     }
-    viewBinding.recyclerView.adapter = adpter
-    viewBinding.banner
+    // 添加到RecyclerView的header
+    listAdapter.addHeaderView(bannerView)
+    // 触发加载更多
+    listAdapter.loadMoreModule.isEnableLoadMore = true
+    listAdapter.loadMoreModule.setOnLoadMoreListener {
+      loadData(false)
+    }
+    //绑定recyclerview的适配器
+    viewBinding.recyclerView.adapter = listAdapter
+
+    //banner绑定适配器
+    bannerView
       .addBannerLifecycleObserver(viewLifecycleOwner)
       .indicator = CircleIndicator(requireContext())
+    bannerView.setAdapter(bannerAdapter)
 
-    viewBinding.banner.setAdapter(bannerAdapter)
-
+    //viewModel开始发起请求
     viewModel.getBanner(
       onStart = {
-
+        //可以再请求开始的时候做一些操作，比如弹框
       },
       onComplete = {
-
+        //可以再请求结束的时候做一些操作，比如关闭弹框
       },
       onError = {
+        //过程之中发生错误的回调
         it?.let {
           showToast(it)
         }
       })
+    addObserver()
+    viewBinding.layoutSwipe.setOnRefreshListener { loadData(true) }
+  }
+
+  /**
+   * 架线
+   */
+ private fun addDivider(){
+    //recyclerview划线
+
+    requireContext().dividerBuilder()
+      .colorRes(R.color.line_divider)
+      .size(1, TypedValue.COMPLEX_UNIT_DIP)
+      .build()
+      .addTo(viewBinding.recyclerView)
+  }
+
+  /**
+   * 数据观察
+   */
+  private fun addObserver() {
     lifecycleScope.launch {
       viewModel.bannerFLow.collect {
+        //处理收集的数据
         lifecycleScope.launch(Dispatchers.Main) {
           banners.clear()
           banners.addAll(it)
@@ -82,17 +141,40 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>() {
         }
       }
     }
-  }
 
-
-  private fun showToast(message: String) {
-    lifecycleScope.launch(Dispatchers.Main){
-      Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    lifecycleScope.launch {
+      viewModel.articleFLow.collect {
+        lifecycleScope.launch(Dispatchers.Main) {
+          it.let {
+            listAdapter.loadMoreModule.isEnableLoadMore = !it.over
+            if (viewBinding.layoutSwipe.isRefreshing) {
+              viewBinding.layoutSwipe.isRefreshing = false
+            }
+            listAdapter.addData(it.datas)
+            listAdapter.loadMoreModule.loadMoreComplete()
+          }
+        }
+      }
     }
+
+
+
+    lifecycleScope.launch(Dispatchers.IO) {
+      viewModel.errorMessage.collect {
+        if (!TextUtils.isEmpty(it)) {
+          showToast(it)
+        }
+      }
+    }
+
   }
 
-  private fun loadData(isUpdate: Boolean){
 
+  private fun loadData(isRefresh: Boolean) {
+    if (isRefresh) {
+      listAdapter.setNewInstance(mutableListOf())
+    }
+    viewModel.loadMoreHomeArticle(isRefresh)
   }
 
 

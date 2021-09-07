@@ -14,7 +14,9 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
+            app:tabMode="scrollable"
             android:layout_height="?actionBarSize"
+            app:tabIndicatorHeight="@dimen/dp_4"
             app:layout_scrollFlags="scroll|enterAlways"
             app:tabIndicatorFullWidth="false" />
 

@@ -56,5 +56,11 @@ interface ApiService {
   @GET("/article/list/{page}/json")
   suspend fun getHomeArticles(@Path("page") page: Int): ApiResponse<Article>
 
+  /**
+   * 获取广场文章列表
+   */
+  @GET("/user_article/list/{page}/json")
+  suspend fun getSquareArticleList(@Path("page") page: Int): ApiResponse<Article>
+
 
 }

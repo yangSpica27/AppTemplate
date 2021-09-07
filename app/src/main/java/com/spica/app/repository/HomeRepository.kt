@@ -63,11 +63,25 @@ class HomeRepository @Inject constructor(
    *  获取首页文章
    */
   @WorkerThread
-  fun fetchHomeArcicle(
+  fun fetchHomeArticle(
+    page: Int,
+    onStart: () -> Unit,
     onComplete: () -> Unit,
-    onError: (String?) -> Unit) {
-
-  }
-
+    onError: (String?) -> Unit
+  ) = flow {
+    val response = wanAndroidClient.fetchHomeArticles(page)
+    response.suspendOnSuccess {
+      //请求成功
+      emit(data.articleData)
+    }
+      .onError {
+        onError(message())
+      }.onException {
+        onError(message)
+      }
+  }.onStart { onStart() }
+    .onCompletion {
+    onComplete()
+  }.flowOn(Dispatchers.IO)
 
 }
