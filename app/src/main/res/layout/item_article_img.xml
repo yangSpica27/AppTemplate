@@ -7,6 +7,8 @@
     android:layout_height="wrap_content"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
+    android:transitionName="shared_element_container"
+    android:foreground="?attr/selectableItemBackground"
     android:background="@color/white"
     android:paddingBottom="12dp"
     android:paddingTop="12dp">
@@ -28,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="21小时前"
-        android:textSize="@dimen/sp_14"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@id/tv_author"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -48,6 +50,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         tools:text="玩安卓客户端"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tv_desc"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         app:layout_constraintTop_toTopOf="@id/iv_pic"
@@ -69,6 +72,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:ellipsize="end"
+        app:layout_constrainedWidth="true"
+        android:textColor="@color/textColorPrimaryLight"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         app:layout_constraintStart_toEndOf="@id/iv_pic"
         android:layout_marginStart="12dp"
@@ -84,7 +89,16 @@
         app:layout_constraintBottom_toBottomOf="@id/btn_like"
         app:layout_constraintEnd_toStartOf="@id/btn_like"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_pic" />
+        app:layout_constraintTop_toBottomOf="@id/iv_pic">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            app:chipBackgroundColor="@color/purple_500"
+            app:chipCornerRadius="@dimen/dp_4" />
+    </com.google.android.material.chip.ChipGroup>
 
     <ImageView
         android:id="@+id/btn_like"

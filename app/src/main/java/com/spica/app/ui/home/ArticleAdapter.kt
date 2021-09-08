@@ -16,6 +16,7 @@ import com.spica.app.extensions.hide
 import com.spica.app.model.article.ArticleItem
 
 
+@Suppress("unused")
 class ArticleAdapter constructor(private val showStar: Boolean) : LoadMoreModule,
   BaseMultiItemQuickAdapter<ArticleItem, BaseViewHolder>() {
 
@@ -32,6 +33,7 @@ class ArticleAdapter constructor(private val showStar: Boolean) : LoadMoreModule
   }
 
   @SuppressLint("SetTextI18n")
+  @Suppress("ObsoleteSdkInt")
   override fun convert(holder: BaseViewHolder, item: ArticleItem) {
 
     if (holder.itemViewType == ITEM_TEXT) {
@@ -48,7 +50,6 @@ class ArticleAdapter constructor(private val showStar: Boolean) : LoadMoreModule
         binding.tvDesc.text = item.desc
       }
 
-      binding.articleAuthorImg.load(R.drawable.ic_time)
       binding.articleTag.text = item.chapterName + "·" + item.superChapterName
       if (item.author.isBlank()) {
         binding.articleAuthor.text = item.shareUser
@@ -72,7 +73,9 @@ class ArticleAdapter constructor(private val showStar: Boolean) : LoadMoreModule
         binding.tvTitle.text = fromHtml(item.title)
       }
       binding.ivPic.load(item.envelopePic)
-
+      if (item.chapterName == "未分类")
+        binding.chipGroup.hide()
+      binding.chip.text = item.chapterName
     }
 
   }

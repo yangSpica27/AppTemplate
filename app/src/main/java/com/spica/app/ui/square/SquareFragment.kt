@@ -1,9 +1,10 @@
 package com.spica.app.ui.square
 
+import android.app.ActivityOptions
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import com.fondesa.recyclerviewdivider.dividerBuilder
@@ -17,6 +18,7 @@ import com.spica.app.ui.webview.WebActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 
 /**
  * 广场Square
@@ -27,7 +29,7 @@ class SquareFragment : BindingFragment<LayoutListBinding>() {
   /**
    * viewModel
    */
-  private val viewModel: ArticleViewModel by activityViewModels()
+  private val viewModel: ArticleViewModel by viewModels()
 
   /**
    * 列表适配器
@@ -41,6 +43,10 @@ class SquareFragment : BindingFragment<LayoutListBinding>() {
     LayoutListBinding.inflate(layoutInflater, container, false)
 
   override fun init() {
+    OverScrollDecoratorHelper.setUpOverScroll(
+      viewBinding.recyclerView,
+      OverScrollDecoratorHelper.ORIENTATION_VERTICAL
+    )
     addDivider()
     // 触发加载更多
     listAdapter.loadMoreModule.isEnableLoadMore = true
@@ -54,14 +60,20 @@ class SquareFragment : BindingFragment<LayoutListBinding>() {
 
   private fun addObserver() {
 
-    listAdapter.setOnItemClickListener { _, _, position ->
+    listAdapter.setOnItemClickListener { _, view, position ->
       kotlin.run {
         val intent = WebActivity.newIntent(
           requireContext(),
           listAdapter.data[position].title,
           listAdapter.data[position].link
         )
-        startActivity(intent)
+        view.transitionName = "shared_element_container"
+        val options = ActivityOptions.makeSceneTransitionAnimation(
+          requireActivity(),
+          view,
+          "shared_element_container" // The transition name to be matched in Activity B.
+        )
+        startActivity(intent, options.toBundle())
       }
     }
 

@@ -1,8 +1,10 @@
 package com.spica.app.ui.main
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.viewModels
 import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.spica.app.R
 import com.spica.app.base.BindingActivity
 import com.spica.app.databinding.ActivityMainBinding
@@ -14,6 +16,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 
 
   private val viewModel: MainViewModel by viewModels()
+
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+    window.sharedElementsUseOverlay = false
+    super.onCreate(savedInstanceState)
+  }
 
   private val onItemSelectedListener by lazy {
     NavigationBarView.OnItemSelectedListener {
@@ -32,7 +41,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
           return@OnItemSelectedListener true
         }
         R.id.project -> {
-          viewBinding.mainViewPager.currentItem = MainPagerAdapter.SEARCH
+          viewBinding.mainViewPager.currentItem = MainPagerAdapter.PROJECT
           return@OnItemSelectedListener true
         }
         R.id.profile -> {
@@ -53,7 +62,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
   private fun initView() {
     viewBinding.mainViewPager.isUserInputEnabled = false
     viewBinding.mainViewPager.offscreenPageLimit = 5
-    viewBinding.mainViewPager.adapter = MainPagerAdapter(this)
+    viewBinding.mainViewPager.adapter = MainPagerAdapter(supportFragmentManager, lifecycle)
     viewBinding.bottomNavigationBar.setOnItemSelectedListener(onItemSelectedListener)
   }
 

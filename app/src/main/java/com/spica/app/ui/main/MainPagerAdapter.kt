@@ -1,7 +1,8 @@
 package com.spica.app.ui.main
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.spica.app.ui.homecontainer.HomeContainerFragment
 import com.spica.app.ui.mine.MineFragment
@@ -9,7 +10,8 @@ import com.spica.app.ui.mine.MineFragment
 /**
  * 主页的pager适配器
  */
-class MainPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+class MainPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+  FragmentStateAdapter(fragmentManager, lifecycle) {
 
 
   private val fragmentsCreators: Map<Int, () -> Fragment> = mapOf(

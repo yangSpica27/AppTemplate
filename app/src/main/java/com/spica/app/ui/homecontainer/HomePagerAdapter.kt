@@ -3,7 +3,10 @@ package com.spica.app.ui.homecontainer
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.spica.app.ui.home.HomeFragment
+import com.spica.app.ui.navigation.NavigationFragment
 import com.spica.app.ui.square.SquareFragment
+import com.spica.app.ui.system.SystemFragment
+import com.spica.app.ui.updateproject.UpdateProjectFragment
 
 class HomePagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
@@ -18,9 +21,9 @@ class HomePagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
   private val fragmentsCreators: Map<Int, () -> Fragment> = mapOf(
     HOME to { HomeFragment() },
     SQUARE to { SquareFragment() },
-    UPDATE to { Fragment() },
-    SYSTEM to { Fragment() },
-    NAVIGATION to { Fragment() }
+    UPDATE to { UpdateProjectFragment() },
+    SYSTEM to { SystemFragment() },
+    NAVIGATION to { NavigationFragment() }
   )
 
   override fun getItemCount(): Int = fragmentsCreators.size

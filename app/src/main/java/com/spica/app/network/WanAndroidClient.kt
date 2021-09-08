@@ -3,6 +3,8 @@ package com.spica.app.network
 import com.skydoves.sandwich.ApiResponse
 import com.spica.app.model.article.Article
 import com.spica.app.model.banner.Banner
+import com.spica.app.model.navigation.Navigation
+import com.spica.app.model.system.SystemType
 import com.spica.app.model.user.User
 import com.spica.app.network.service.ApiService
 import javax.inject.Inject
@@ -30,5 +32,15 @@ class WanAndroidClient
   suspend fun fetchSquareArticles(page: Int): ApiResponse<Article> =
     apiService.getSquareArticleList(page)
 
+
+  suspend fun fetchSystemTypes(): ApiResponse<SystemType> =
+    apiService.getSystemType()
+
+
+  suspend fun fetchNavigation(): ApiResponse<Navigation> =
+    apiService.getNavigation()
+
+  suspend fun fetchUpdateProject(page: Int): ApiResponse<Article> =
+    apiService.getUpdateProject(page)
 
 }

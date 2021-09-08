@@ -15,6 +15,7 @@ import com.spica.app.databinding.FragmentMineBinding
 import com.spica.app.tools.Preference
 import com.spica.app.ui.login.LoginActivity
 import com.spica.app.ui.main.MainViewModel
+import com.spica.app.ui.userinfo.UserInfoActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,6 +37,7 @@ class MineFragment : BindingFragment<FragmentMineBinding>() {
   override fun init() {
     viewBinding.itemWrite.setOnClickListener {
       //点击写作
+      startActivity(Intent(requireContext(), UserInfoActivity::class.java))
     }
     viewBinding.itemExit.setOnClickListener {
       //点击退出
@@ -91,6 +93,8 @@ class MineFragment : BindingFragment<FragmentMineBinding>() {
   private fun enterNextPage() {
     if (!isLogin) {
       startActivity(Intent(requireContext(), LoginActivity::class.java))
+    } else {
+      startActivity(Intent(requireContext(), UserInfoActivity::class.java))
     }
   }
 

@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/drawable/bg_round_border.xml" value="0.27870370370370373" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/drawable/bg_round_top.xml" value="0.28425925925925927" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/drawable/ic_default_avatar.xml" value="0.24259259259259258" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/drawable/ic_right.xml" value="0.24259259259259258" />
@@ -10,23 +11,24 @@
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/drawable/spacer_medium.xml" value="0.28425925925925927" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/activity_main.xml" value="0.21296296296296297" />
+        <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/activity_user_info.xml" value="0.3333333333333333" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/activity_webview.xml" value="0.16666666666666666" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/fragment_home.xml" value="0.21296296296296297" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/fragment_home_container.xml" value="0.17407407407407408" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/fragment_mine.xml" value="0.21296296296296297" />
-        <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/item_article.xml" value="0.5" />
+        <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/item_article.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/item_article_img.xml" value="0.3333333333333333" />
+        <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/item_system.xml" value="0.3333333333333333" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/layout_list.xml" value="0.2111111111111111" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/layout/view_setting_item.xml" value="0.21296296296296297" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/menu/bottom_nav_menu.xml" value="0.19907407407407407" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/menu/menu_webview.xml" value="0.19814814814814816" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/xml/attrs.xml" value="0.21296296296296297" />
         <entry key="..\:/AndroidStudioProjects/App/app/src/main/res/xml/provider_paths.xml" value="0.20462962962962963" />
-        <entry key="..\:/android_project/AppTemplate/app/src/main/res/layout/item_article.xml" value="0.2234375" />
-        <entry key="..\:/android_project/AppTemplate/app/src/main/res/layout/item_article_img.xml" value="0.264" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

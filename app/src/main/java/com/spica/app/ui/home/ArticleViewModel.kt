@@ -7,6 +7,7 @@ import com.spica.app.model.article.ArticleItem
 import com.spica.app.model.banner.BannerData
 import com.spica.app.repository.HomeRepository
 import com.spica.app.repository.SquareRepository
+import com.spica.app.repository.UpdateProjectRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
@@ -16,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ArticleViewModel @Inject constructor(
   private val homeRepository: HomeRepository,
-  private val squareRepository: SquareRepository
+  private val squareRepository: SquareRepository,
+  private val updateProjectRepository: UpdateProjectRepository
 ) : ViewModel() {
 
 
@@ -34,9 +36,13 @@ class ArticleViewModel @Inject constructor(
   //广场的页码
   private val squareCurrentPage: MutableStateFlow<Int> = MutableStateFlow(0)
 
+  //最新项目的页码
+  private val updateProjectPage: MutableStateFlow<Int> = MutableStateFlow(0)
+
   private val squareList: MutableStateFlow<ArrayList<ArticleItem>> = MutableStateFlow(arrayListOf())
 
-  private val _articleFlow: Flow<ArticleData> = homeCurrentPage.flatMapConcat { page ->
+
+  private val _articleFlow: Flow<ArticleData> = homeCurrentPage.flatMapLatest { page ->
     homeRepository.fetchHomeArticle(
       onStart = {
         isLoading.value = true
@@ -52,12 +58,28 @@ class ArticleViewModel @Inject constructor(
     )
   }
 
-  private val _articleSquareFLow: Flow<ArticleData> = squareCurrentPage.flatMapConcat { page ->
+  private val _articleSquareFLow: Flow<ArticleData> = squareCurrentPage.flatMapLatest { page ->
     squareRepository.getSquareArticle(
       page,
       onError = {
         errorMessage.value = it
       })
+  }
+
+  private val _updateProjectFlow: Flow<ArticleData> = updateProjectPage.flatMapLatest { page ->
+    updateProjectRepository.fetchUpdateProjects(
+      onStart = {
+        isLoading.value = true
+      },
+      onError = {
+        errorMessage.value = it
+        isLoading.value = false
+      },
+      onComplete = {
+        isLoading.value = false
+      },
+      page = page
+    )
   }
 
   val squareArticleFlow: Flow<ArticleData>
@@ -69,6 +91,10 @@ class ArticleViewModel @Inject constructor(
 
   val articleFLow: Flow<ArticleData>
     get() = _articleFlow
+
+
+  val updateProjectsFlow: Flow<ArticleData>
+    get() = _updateProjectFlow
 
   /**
    * 获取Banner
@@ -111,5 +137,15 @@ class ArticleViewModel @Inject constructor(
     }
   }
 
+  /**
+   * 加载更多项目
+   */
+  fun loadMoreProject(isRefresh: Boolean) {
+    if (isRefresh) {
+      updateProjectPage.value = 0
+    } else {
+      updateProjectPage.value++
+    }
+  }
 
 }

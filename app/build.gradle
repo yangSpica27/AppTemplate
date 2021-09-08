@@ -142,8 +142,8 @@ dependencies {
   //cookieJar
   implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 
-  //Webview
-  implementation 'com.github.Justson.AgentWeb:agentweb-core:v4.1.9-androidx'
+  //over
+  implementation 'io.github.everythingme:overscroll-decor-android:1.1.1'
 
 }
 

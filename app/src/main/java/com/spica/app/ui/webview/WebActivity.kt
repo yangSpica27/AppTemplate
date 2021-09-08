@@ -13,6 +13,10 @@ import android.webkit.WebViewClient
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.makeText
+import androidx.core.view.ViewCompat
+import com.google.android.material.transition.platform.MaterialArcMotion
+import com.google.android.material.transition.platform.MaterialContainerTransform
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.spica.app.R
 import com.spica.app.base.BindingActivity
 import com.spica.app.databinding.ActivityWebviewBinding
@@ -25,10 +29,7 @@ private val URL_POSITION_CACHES: java.util.HashMap<String, Int> = HashMap()
 class WebActivity : BindingActivity<ActivityWebviewBinding>(),
   ObservableWebView.OnScrollChangedListener {
 
-
   private lateinit var url: String
-
-
 
   private var positionHolder = 0
 
@@ -44,15 +45,26 @@ class WebActivity : BindingActivity<ActivityWebviewBinding>(),
   }
 
 
-
   override fun onCreate(savedInstanceState: Bundle?) {
-    overridePendingTransition(0, 0);
+    ViewCompat.setTransitionName(findViewById(android.R.id.content), "shared_element_container")
+    setEnterSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+    window.sharedElementEnterTransition = MaterialContainerTransform().apply {
+      addTarget(android.R.id.content)
+      duration = 300L
+      pathMotion = MaterialArcMotion()
+    }
+    window.sharedElementReturnTransition = MaterialContainerTransform().apply {
+      addTarget(android.R.id.content)
+      duration = 250L
+    }
+
     super.onCreate(savedInstanceState)
   }
 
   override fun initializer() {
     url = intent.getStringExtra(EXTRA_URL) ?: ""
     var title = intent.getStringExtra(EXTRA_TITLE)
+
 
     setSupportActionBar(viewBinding.toolbar)
 
@@ -151,10 +163,6 @@ class WebActivity : BindingActivity<ActivityWebviewBinding>(),
     positionHolder = y
   }
 
-  override fun finish() {
-    super.finish()
-    overridePendingTransition(0, 0)
-  }
 
 
   override fun onDestroy() {

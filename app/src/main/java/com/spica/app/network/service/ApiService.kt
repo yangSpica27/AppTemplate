@@ -3,6 +3,8 @@ package com.spica.app.network.service
 import com.skydoves.sandwich.ApiResponse
 import com.spica.app.model.article.Article
 import com.spica.app.model.banner.Banner
+import com.spica.app.model.navigation.Navigation
+import com.spica.app.model.system.SystemType
 import com.spica.app.model.user.User
 import retrofit2.http.*
 
@@ -62,5 +64,38 @@ interface ApiService {
   @GET("/user_article/list/{page}/json")
   suspend fun getSquareArticleList(@Path("page") page: Int): ApiResponse<Article>
 
+
+  /**
+   * 获取最新项目
+   */
+  @GET("/article/listproject/{page}/json")
+  suspend fun getLastedProject(@Path("page") page: Int): ApiResponse<Article>
+
+
+  /**
+   * 获取系统结构树
+   */
+  @GET("/tree/json")
+  suspend fun getSystemType(): ApiResponse<SystemType>
+
+  /**
+   * 获取所有导航
+   */
+  @GET("/navi/json")
+  suspend fun getNavigation(): ApiResponse<Navigation>
+
+  /**
+   * 获取最新项目
+   */
+  @GET("https://wanandroid.com/article/listproject/{page}/json")
+  suspend fun getUpdateProject(@Path("page") page: Int): ApiResponse<Article>
+
+
+  /**
+   * 获取体系结构 单元具体内容列表
+   */
+  @GET("/article/list/{page}/json")
+  suspend fun getSystemTypeDetail(@Path("page") page: Int, @Query("cid") cid: Int):
+      ApiResponse<SystemType>
 
 }

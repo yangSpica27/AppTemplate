@@ -51,6 +51,7 @@
 
         </activity>
         <activity android:name=".ui.webview.WebActivity" />
+        <activity android:name=".ui.userinfo.UserInfoActivity" />
 
         <!--用于初始化-->
         <provider

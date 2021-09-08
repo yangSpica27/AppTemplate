@@ -127,6 +127,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>() {
         onSuccess = {
           lifecycleScope.launch(Dispatchers.Main) {
             showSnackbar("登录成功")
+            finish()
           }
         }
       )

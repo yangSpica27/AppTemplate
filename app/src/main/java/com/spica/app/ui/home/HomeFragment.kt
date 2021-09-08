@@ -1,19 +1,23 @@
 package com.spica.app.ui.home
 
 import android.annotation.SuppressLint
+import android.app.ActivityOptions
+import android.os.Bundle
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import coil.load
 import com.fondesa.recyclerviewdivider.dividerBuilder
+import com.google.android.material.transition.Hold
 import com.spica.app.R
 import com.spica.app.base.BindingFragment
 import com.spica.app.databinding.LayoutListBinding
 import com.spica.app.model.banner.BannerData
+import com.spica.app.ui.webview.WebActivity
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
@@ -21,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 
 /**
  * 主页
@@ -30,7 +35,7 @@ class HomeFragment : BindingFragment<LayoutListBinding>() {
   /**
    * viewModel
    */
-  private val viewModel: ArticleViewModel by activityViewModels()
+  private val viewModel: ArticleViewModel by viewModels()
 
 
   /**
@@ -62,6 +67,12 @@ class HomeFragment : BindingFragment<LayoutListBinding>() {
     }
   }
 
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    exitTransition = Hold()
+  }
+
   /**
    * 绑定ViewBinding
    */
@@ -70,6 +81,11 @@ class HomeFragment : BindingFragment<LayoutListBinding>() {
 
   @SuppressLint("NotifyDataSetChanged")
   override fun init() {
+
+    OverScrollDecoratorHelper.setUpOverScroll(
+      viewBinding.recyclerView,
+      OverScrollDecoratorHelper.ORIENTATION_VERTICAL
+    )
 
     addDivider()
 
@@ -131,6 +147,25 @@ class HomeFragment : BindingFragment<LayoutListBinding>() {
    * 数据观察
    */
   private fun addObserver() {
+    listAdapter.setOnItemClickListener { _, view, position ->
+      kotlin.run {
+        val intent = WebActivity.newIntent(
+          requireContext(),
+          listAdapter.data[position].title,
+          listAdapter.data[position].link
+        )
+
+
+
+        val options = ActivityOptions.makeSceneTransitionAnimation(
+          requireActivity(),
+          view,
+          "shared_element_container" // The transition name to be matched in Activity B.
+        )
+        startActivity(intent,options.toBundle())
+      }
+
+    }
     lifecycleScope.launch {
       viewModel.bannerFLow.collect {
         //处理收集的数据
