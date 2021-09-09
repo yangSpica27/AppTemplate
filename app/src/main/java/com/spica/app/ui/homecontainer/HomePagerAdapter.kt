@@ -8,7 +8,9 @@ import com.spica.app.ui.square.SquareFragment
 import com.spica.app.ui.system.SystemFragment
 import com.spica.app.ui.updateproject.UpdateProjectFragment
 
-class HomePagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class HomePagerAdapter(fragment: Fragment,
+
+) : FragmentStateAdapter(fragment) {
 
   companion object {
     const val HOME = 0 //首页

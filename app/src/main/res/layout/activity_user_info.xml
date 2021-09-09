@@ -46,7 +46,7 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="涩郎"
+                            android:text="Spica 27"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -199,7 +199,7 @@
             android:fillViewport="false"
             app:tabIndicatorFullWidth="false"
             app:tabMode="scrollable"
-            app:layout_scrollFlags="scroll"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:tabIndicatorColor="#0835f8"
             app:tabIndicatorHeight="2.0dp"
             app:tabSelectedTextColor="#0835f8"

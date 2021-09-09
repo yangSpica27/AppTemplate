@@ -37,7 +37,6 @@ class MineFragment : BindingFragment<FragmentMineBinding>() {
   override fun init() {
     viewBinding.itemWrite.setOnClickListener {
       //点击写作
-      startActivity(Intent(requireContext(), UserInfoActivity::class.java))
     }
     viewBinding.itemExit.setOnClickListener {
       //点击退出
@@ -48,19 +47,14 @@ class MineFragment : BindingFragment<FragmentMineBinding>() {
     viewBinding.itemFriend.setOnClickListener {
       //点击朋友
     }
-
-  }
-
-
-  override fun onResume() {
-    super.onResume()
+    viewBinding.avatar.setOnClickListener(clickToLogin)
+    viewBinding.tvUsername.setOnClickListener(clickToLogin)
+    viewBinding.tvEmail.setOnClickListener(clickToLogin)
+    viewBinding.ivMore.setOnClickListener(clickToLogin)
     if (!isLogin) {
       viewBinding.avatar.load(R.drawable.ic_default_avatar)
       viewBinding.tvUsername.text = "未登录"
       viewBinding.tvEmail.text = "点击登录"
-      viewBinding.avatar.setOnClickListener(clickToLogin)
-      viewBinding.tvUsername.setOnClickListener(clickToLogin)
-      viewBinding.tvEmail.setOnClickListener(clickToLogin)
     } else {
       viewModel.user.observe(viewLifecycleOwner) {
         //切换到主线程
@@ -77,6 +71,12 @@ class MineFragment : BindingFragment<FragmentMineBinding>() {
         }
       }
     }
+
+  }
+
+
+  override fun onResume() {
+    super.onResume()
   }
 
 
@@ -84,7 +84,7 @@ class MineFragment : BindingFragment<FragmentMineBinding>() {
    * 点击到达登录页面
    */
   private val clickToLogin = View.OnClickListener {
-    startActivity(Intent(requireContext(), LoginActivity::class.java))
+    enterNextPage()
   }
 
   /**

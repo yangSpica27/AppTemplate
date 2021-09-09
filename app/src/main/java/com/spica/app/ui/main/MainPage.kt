@@ -25,7 +25,10 @@ class MainPage(context: Context) : CustomLayout(context) {
     .apply {
       setTextColor(Color.BLACK)
       setBackgroundResource(R.color.cardview_dark_background)
-      text = "发现掘金和知乎的分享界面效果挺好的，比自己的用的AlertDialog 和 PopupWindow的效果好太多就像学习一下，如图是掘金的文章分享界面"
+      text = "发现掘金和知乎的分享界面效果挺好的，" +
+          "比自己的用的AlertDialog 和 " +
+          "PopupWindow的效果好太多就像学习一下，" +
+          "如图是掘金的文章分享界面"
     }
 
 

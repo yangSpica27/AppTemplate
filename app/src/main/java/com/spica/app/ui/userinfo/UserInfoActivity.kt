@@ -17,7 +17,7 @@ class UserInfoActivity : BindingActivity<ActivityUserInfoBinding>() {
     viewBinding.appBarLayout.addOnOffsetChangedListener(
       AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
         if (verticalOffset <= viewBinding.headLayout.height / 2) {
-          viewBinding.collapsingToolbarLayout.title = "涩郎"
+          viewBinding.collapsingToolbarLayout.title = "Spica 27"
         } else {
           viewBinding.collapsingToolbarLayout.title = " "
         }

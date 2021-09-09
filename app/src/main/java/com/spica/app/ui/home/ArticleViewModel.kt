@@ -42,7 +42,8 @@ class ArticleViewModel @Inject constructor(
   private val squareList: MutableStateFlow<ArrayList<ArticleItem>> = MutableStateFlow(arrayListOf())
 
 
-  private val _articleFlow: Flow<ArticleData> = homeCurrentPage.flatMapLatest { page ->
+  private val _articleFlow: Flow<ArticleData> =
+    homeCurrentPage.flatMapLatest { page ->
     homeRepository.fetchHomeArticle(
       onStart = {
         isLoading.value = true

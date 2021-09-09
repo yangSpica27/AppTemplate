@@ -1,8 +1,10 @@
-package com.spica.app.ui.updateproject
+package com.spica.app.ui.project
 
+import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.fondesa.recyclerviewdivider.dividerBuilder
@@ -10,46 +12,62 @@ import com.spica.app.R
 import com.spica.app.base.BindingFragment
 import com.spica.app.databinding.LayoutListBinding
 import com.spica.app.ui.home.ArticleAdapter
-import com.spica.app.ui.home.ArticleViewModel
+import com.spica.app.ui.projectcontainer.ProjectViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 /**
- * 最新项目列表
+ * 项目列表
  */
-@AndroidEntryPoint
-class UpdateProjectFragment : BindingFragment<LayoutListBinding>() {
+private const val KEY_ID = "ID"
 
+@AndroidEntryPoint
+class ProjectFragment : BindingFragment<LayoutListBinding>() {
+
+  private val viewModel: ProjectViewModel by viewModels()
 
   private val listAdapter by lazy {
     ArticleAdapter(false)
   }
 
-  private val viewModel by viewModels<ArticleViewModel>()
-
-
-  override fun setupViewBinding(inflater: LayoutInflater, container: ViewGroup?):
-      LayoutListBinding = LayoutListBinding.inflate(layoutInflater, container, false)
-
-  override fun init() {
-    addDivider()
-    viewBinding.layoutSwipe.isEnabled = false
-    viewBinding.recyclerView.adapter = listAdapter
-    listAdapter.loadMoreModule.setOnLoadMoreListener {
-      viewModel.loadMoreProject(false)
-    }
-    lifecycleScope.launch {
-      viewModel.updateProjectsFlow.collect {
-        listAdapter.addData(it.datas)
-        listAdapter.loadMoreModule.loadMoreComplete()
-      }
+  companion object {
+    fun newInstance(id: Int): Fragment {
+      val fragment = ProjectFragment()
+      val bundle = Bundle()
+      bundle.putInt(KEY_ID, id)
+      fragment.arguments = bundle
+      return fragment
     }
   }
 
 
+  override fun setupViewBinding(inflater: LayoutInflater, container: ViewGroup?):
+      LayoutListBinding = LayoutListBinding.inflate(inflater, container, false)
+
+  override fun init() {
+    viewBinding.layoutSwipe.isEnabled = false
+    addDivider()
+    viewBinding.recyclerView.adapter = listAdapter
+    val id = arguments?.getInt(KEY_ID) ?: 0
+    loadMore(id)
+    listAdapter.loadMoreModule.setOnLoadMoreListener {
+      loadMore(id)
+    }
+    lifecycleScope.launch {
+      viewModel.articleFlow.collectLatest {
+        listAdapter.addData(it)
+        listAdapter.loadMoreModule.loadMoreComplete()
+
+        if (it.isEmpty()) listAdapter.loadMoreModule.loadMoreEnd(true)
+      }
+    }
+
+  }
+
+
   /**
-   * 架线
+   * 加分割线
    */
   private fun addDivider() {
     //recyclerview划线
@@ -58,6 +76,11 @@ class UpdateProjectFragment : BindingFragment<LayoutListBinding>() {
       .size(1, TypedValue.COMPLEX_UNIT_DIP)
       .build()
       .addTo(viewBinding.recyclerView)
+  }
+
+
+  private fun loadMore(id: Int) {
+    viewModel.getArticles(id)
   }
 
 

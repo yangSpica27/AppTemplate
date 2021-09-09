@@ -12,15 +12,12 @@
         android:icon="@drawable/ic_book"
         android:title="公众号" />
 
-    <item
-        android:id="@+id/search"
-        android:icon="@drawable/ic_search"
-        android:title="搜索" />
 
     <item
         android:id="@+id/project"
         android:icon="@drawable/ic_file_code"
         android:title="项目集" />
+
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_me"

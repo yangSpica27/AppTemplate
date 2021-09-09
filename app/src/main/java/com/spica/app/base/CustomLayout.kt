@@ -55,6 +55,7 @@ abstract class CustomLayout @JvmOverloads constructor(
   protected val View.measuredWidthWithMargins get() = (measuredWidth + marginLeft + marginRight)
   protected val View.measuredHeightWithMargins get() = (measuredHeight + marginTop + marginBottom)
 
+  @Throws(IllegalAccessException::class)
   protected fun View.defaultWidthMeasureSpec(parentView: ViewGroup): Int {
     return when (layoutParams.width) {
       ViewGroup.LayoutParams.MATCH_PARENT -> parentView.measuredWidth.toExactlyMeasureSpec()
@@ -64,6 +65,7 @@ abstract class CustomLayout @JvmOverloads constructor(
     }
   }
 
+  @Throws(IllegalAccessException::class)
   protected fun View.defaultHeightMeasureSpec(parentView: ViewGroup): Int {
     return when (layoutParams.height) {
       ViewGroup.LayoutParams.MATCH_PARENT -> parentView.measuredHeight.toExactlyMeasureSpec()

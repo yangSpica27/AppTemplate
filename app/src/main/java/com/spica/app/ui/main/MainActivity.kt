@@ -14,9 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>() {
 
-
   private val viewModel: MainViewModel by viewModels()
-
 
   override fun onCreate(savedInstanceState: Bundle?) {
     setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
@@ -24,9 +22,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
     super.onCreate(savedInstanceState)
   }
 
+
   private val onItemSelectedListener by lazy {
     NavigationBarView.OnItemSelectedListener {
-
       when (it.itemId) {
         R.id.home -> {
           viewBinding.mainViewPager.currentItem = MainPagerAdapter.HOME
@@ -34,10 +32,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         }
         R.id.blog -> {
           viewBinding.mainViewPager.currentItem = MainPagerAdapter.BLOG
-          return@OnItemSelectedListener true
-        }
-        R.id.search -> {
-          viewBinding.mainViewPager.currentItem = MainPagerAdapter.SEARCH
           return@OnItemSelectedListener true
         }
         R.id.project -> {
@@ -49,7 +43,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
           return@OnItemSelectedListener true
         }
       }
-
       return@OnItemSelectedListener false
     }
   }
@@ -61,7 +54,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 
   private fun initView() {
     viewBinding.mainViewPager.isUserInputEnabled = false
-    viewBinding.mainViewPager.offscreenPageLimit = 5
+    viewBinding.mainViewPager.offscreenPageLimit = 4
     viewBinding.mainViewPager.adapter = MainPagerAdapter(supportFragmentManager, lifecycle)
     viewBinding.bottomNavigationBar.setOnItemSelectedListener(onItemSelectedListener)
   }

@@ -56,43 +56,20 @@ abstract class BindingFragment<ViewBindingType : ViewBinding> : Fragment(), Life
 
   @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
   private fun clearViewBinding() {
-//        _binding = null
     viewLifecycleOwner.lifecycle.removeObserver(this)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     viewLifecycleOwner.lifecycle.addObserver(this)
+    init()
   }
 
   override fun onResume() {
     super.onResume()
     if (isFirstLoad) {
       isFirstLoad = false
-      init()
     }
-  }
-
-  override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
-    var animation = super.onCreateAnimation(transit, enter, nextAnim)
-    if (animation == null && nextAnim != 0) {
-      try {
-        animation = AnimationUtils.loadAnimation(activity, nextAnim)
-      } catch (e: Exception) {
-        e.printStackTrace()
-      }
-    }
-    if (animation != null) {
-      view?.setLayerType(View.LAYER_TYPE_HARDWARE, null)
-      animation.setAnimationListener(object : Animation.AnimationListener {
-        override fun onAnimationRepeat(animation: Animation?) = Unit
-        override fun onAnimationStart(animation: Animation?) = Unit
-        override fun onAnimationEnd(animation: Animation?) {
-          view?.setLayerType(View.LAYER_TYPE_NONE, null)
-        }
-      })
-    }
-    return animation
   }
 
   /**

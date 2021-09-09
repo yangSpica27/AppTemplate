@@ -1,5 +1,6 @@
 package com.spica.app.ui.webview
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -61,13 +62,17 @@ class WebActivity : BindingActivity<ActivityWebviewBinding>(),
     super.onCreate(savedInstanceState)
   }
 
+  @SuppressLint("SetJavaScriptEnabled")
   override fun initializer() {
     url = intent.getStringExtra(EXTRA_URL) ?: ""
-    var title = intent.getStringExtra(EXTRA_TITLE)
+    val title = intent.getStringExtra(EXTRA_TITLE)
 
 
     setSupportActionBar(viewBinding.toolbar)
 
+    viewBinding.toolbar.setNavigationOnClickListener { finish() }
+
+    //配置WebView
     val settings: WebSettings = viewBinding.webView.settings
     settings.javaScriptEnabled = true
     settings.loadWithOverviewMode = true
@@ -80,10 +85,11 @@ class WebActivity : BindingActivity<ActivityWebviewBinding>(),
     viewBinding.webView.setOnScrollChangedListener(this)
     viewBinding.webView.loadUrl(url)
 
+    //init textSwitch
     viewBinding.textSwitch.setFactory {
       val context: Context = this@WebActivity
       val textView = TextView(context)
-      textView.setTextAppearance(context, R.style.WebTitle)
+      textView.setTextAppearance(R.style.WebTitle)
       textView.isSingleLine = true
       textView.ellipsize = TextUtils.TruncateAt.MARQUEE
       textView.setOnClickListener {
@@ -91,9 +97,11 @@ class WebActivity : BindingActivity<ActivityWebviewBinding>(),
       }
       textView
     }
+
+    //textSwitch显示隐藏动画
     viewBinding.textSwitch.setInAnimation(this, android.R.anim.fade_in)
     viewBinding.textSwitch.setOutAnimation(this, android.R.anim.fade_out)
-    if (title != null) setTitle(title)
+    title?.let { setTitle(it) }
   }
 
 
@@ -132,6 +140,7 @@ class WebActivity : BindingActivity<ActivityWebviewBinding>(),
     return true
   }
 
+  @SuppressLint("QueryPermissionsNeeded")
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.action_refresh -> {
@@ -167,15 +176,20 @@ class WebActivity : BindingActivity<ActivityWebviewBinding>(),
 
   override fun onDestroy() {
     val webView = findViewById<WebView?>(R.id.web_view)
+
     val url = webView.url
-    val bottom = floor((webView.contentHeight * webView.scale * 0.8f).toDouble()).toInt()
+
+    val bottom = floor(
+      (webView.contentHeight *
+          webView.scale * 0.8f).toDouble()
+    ).toInt()
     if (positionHolder >= bottom) {
       URL_POSITION_CACHES.remove(url)
     } else {
       URL_POSITION_CACHES[url ?: ""] = positionHolder
     }
     super.onDestroy()
-
+    //销毁webView防止内存泄漏
     webView?.destroy()
   }
 
@@ -183,6 +197,7 @@ class WebActivity : BindingActivity<ActivityWebviewBinding>(),
   private inner class ChromeClient : WebChromeClient() {
 
     override fun onProgressChanged(view: WebView?, newProgress: Int) {
+      //监听加载的进度
       super.onProgressChanged(view, newProgress)
       viewBinding.progress.progress = newProgress
       if (newProgress == 100) {
@@ -194,6 +209,7 @@ class WebActivity : BindingActivity<ActivityWebviewBinding>(),
 
 
     override fun onReceivedTitle(view: WebView?, title: String?) {
+      //获取网页的标题
       super.onReceivedTitle(view, title)
       if (overrideTitleEnabled) {
         setTitle(title)
