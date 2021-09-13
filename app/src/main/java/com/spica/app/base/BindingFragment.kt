@@ -23,8 +23,6 @@ abstract class BindingFragment<ViewBindingType : ViewBinding> : Fragment(), Life
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    allowEnterTransitionOverlap = true
-    allowReturnTransitionOverlap = true
   }
 
   override fun onCreateView(

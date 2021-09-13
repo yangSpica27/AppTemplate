@@ -1,6 +1,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -44,9 +45,10 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_username"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Spica 27"
+                            tools:text="Spica 27"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -74,11 +76,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="40dp"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:text="关注我（微博@涩郎，微信公众号：非著名程序员），我与你闲扯技术大话，笑谈科技人生。以幽默诙谐的态度，面对乏味无聊的技术，用扯淡的方式，分享技术的内涵。谈的是技术，更是我们的人生。"
+                    android:text="关注我（github@SPICa27yang，博客：SPiCa的小屋），我与你闲扯技术大话，笑谈科技人生。以幽默诙谐的态度，面对乏味无聊的技术，用扯淡的方式，分享技术的内涵。谈的是技术，更是我们的人生。"
                     android:textColor="@color/textColorPrimaryLight"
                     android:textSize="12sp" />
 
@@ -92,7 +94,7 @@
                         android:id="@+id/one"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:orientation="vertical">
 

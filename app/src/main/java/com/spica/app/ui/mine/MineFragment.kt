@@ -40,6 +40,19 @@ class MineFragment : BindingFragment<FragmentMineBinding>() {
     }
     viewBinding.itemExit.setOnClickListener {
       //点击退出
+      viewModel.logout(
+        onComplete = {
+          isLogin = false
+          lifecycleScope.launch(Dispatchers.IO) {
+            showToast("退出成功")
+            viewBinding.avatar.load(R.drawable.ic_default_avatar)
+            viewBinding.tvUsername.text = "未登录"
+            viewBinding.tvEmail.text = "点击登录"
+          }
+        },
+        onError = {
+          showToast(it)
+        })
     }
     viewBinding.itemCollect.setOnClickListener {
       //点击收藏
@@ -51,6 +64,11 @@ class MineFragment : BindingFragment<FragmentMineBinding>() {
     viewBinding.tvUsername.setOnClickListener(clickToLogin)
     viewBinding.tvEmail.setOnClickListener(clickToLogin)
     viewBinding.ivMore.setOnClickListener(clickToLogin)
+  }
+
+
+  override fun onResume() {
+    super.onResume()
     if (!isLogin) {
       viewBinding.avatar.load(R.drawable.ic_default_avatar)
       viewBinding.tvUsername.text = "未登录"
@@ -66,17 +84,12 @@ class MineFragment : BindingFragment<FragmentMineBinding>() {
               error(R.drawable.ic_default_avatar)
             }
             viewBinding.tvUsername.text = it.nickname
-            viewBinding.tvEmail.text = if (TextUtils.isEmpty(it.email)) "暂无邮箱信息" else it.email
+            viewBinding.tvEmail.text = if (TextUtils.isEmpty(it.email))
+              "暂无邮箱信息" else it.email
           }
         }
       }
     }
-
-  }
-
-
-  override fun onResume() {
-    super.onResume()
   }
 
 

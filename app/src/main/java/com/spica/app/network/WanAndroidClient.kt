@@ -24,6 +24,9 @@ class WanAndroidClient
   suspend fun login(userName: String, password: String):
       ApiResponse<User> = apiService.login(userName, password)
 
+
+  suspend fun logout(): ApiResponse<Any> = apiService.logOut()
+
   suspend fun register(userName: String, password: String):
       ApiResponse<User> = apiService.register(userName, password, password)
 

@@ -1,10 +1,7 @@
 package com.spica.app.repository
 
 import androidx.annotation.WorkerThread
-import com.skydoves.sandwich.message
-import com.skydoves.sandwich.onError
-import com.skydoves.sandwich.onException
-import com.skydoves.sandwich.suspendOnSuccess
+import com.skydoves.sandwich.*
 import com.spica.app.model.user.UserData
 import com.spica.app.network.WanAndroidClient
 import com.spica.app.persistence.dao.UserDao
@@ -109,5 +106,26 @@ class LoginRepository @Inject constructor(
   }.onCompletion {
     onComplete()
   }.flowOn(Dispatchers.IO)
+
+
+  /**
+   * 登出
+   */
+  suspend fun logout(
+    onComplete: () -> Unit,
+    onError: (String?) -> Unit,
+  ) {
+    val response = wanAndroidClient.logout()
+    response.suspendOnSuccess {
+      //清除用户数数据
+      userDao.deleteUser()
+      onComplete()//触发结束回调
+    }.suspendOnException {
+      onError(message)
+    }.suspendOnError {
+      onError(message())
+    }
+  }
+
 
 }
