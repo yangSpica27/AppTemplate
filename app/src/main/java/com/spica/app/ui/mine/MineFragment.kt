@@ -37,6 +37,7 @@ class MineFragment : BindingFragment<FragmentMineBinding>() {
   override fun init() {
     viewBinding.itemWrite.setOnClickListener {
       //点击写作
+
     }
     viewBinding.itemExit.setOnClickListener {
       //点击退出

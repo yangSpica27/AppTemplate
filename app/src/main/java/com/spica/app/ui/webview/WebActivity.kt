@@ -26,7 +26,7 @@ import kotlin.math.floor
 
 private const val EXTRA_URL = "extra_url"
 private const val EXTRA_TITLE = "extra_title"
-private val URL_POSITION_CACHES: java.util.HashMap<String, Int> = HashMap()
+private val URL_POSITION_CACHES: HashMap<String, Int> = HashMap()
 class WebActivity : BindingActivity<ActivityWebviewBinding>(),
   ObservableWebView.OnScrollChangedListener {
 
@@ -135,8 +135,9 @@ class WebActivity : BindingActivity<ActivityWebviewBinding>(),
     return super.onKeyDown(keyCode, event)
   }
 
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(com.spica.app.R.menu.menu_webview, menu)
+
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    menuInflater.inflate(R.menu.menu_webview, menu)
     return true
   }
 
